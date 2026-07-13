@@ -4,10 +4,29 @@ import pickle
 app = Flask(__name__)
 
 # load models
-with open("models/tfidf_vectorizer.pkl","rb") as file:
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+tfidf_path = os.path.join(
+    BASE_DIR,
+    "models",
+    "tfidf_vectorizer.pkl"
+)
+
+model_path = os.path.join(
+    BASE_DIR,
+    "models",
+    "spam_classifier.pkl"
+)
+
+
+with open(tfidf_path, "rb") as file:
     tfidf = pickle.load(file)
 
-with open("models/spam_classifier.pkl","rb") as file:
+
+with open(model_path, "rb") as file:
     model = pickle.load(file)
     
 @app.route("/")
