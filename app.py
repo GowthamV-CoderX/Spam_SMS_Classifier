@@ -28,7 +28,22 @@ with open(model_path, "rb") as file:
 def validate_message(message):
 
     message = message.strip()
+    # Split into words
+    words = message.split()
 
+    # If the message is a single long random token
+    if len(words) == 1:
+        word = words[0]
+
+        # Reject long alphanumeric strings with no separators
+        if (
+            len(word) >= 15 and
+            re.search(r'[A-Za-z]', word) and
+            re.search(r'\d', word)
+        ):
+            return False, "Please enter a meaningful SMS message."
+    
+    
     # Empty input
     if len(message) == 0:
         return False, "Please enter a message."
